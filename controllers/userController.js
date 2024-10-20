@@ -15,20 +15,20 @@ export const postUsers = async (req, res) => {
       isAdmin,
     });
 
-    const createdUser = await user.save(); // Save the user
-    res.status(201).json({ message: `Yaay! User created.`, user: createdUser });
+    const createdUser = await user.save();
+    res
+      .status(201)
+      .json({ message: `Thank you for Regestering!.`, user: createdUser });
   } catch (error) {
     // Check for duplicate key error
     if (error.code === 11000) {
       // Duplicate key error
-      const field = Object.keys(error.keyValue)[0]; // Get the field that caused the duplicate error
-      res
-        .status(400)
-        .json({
-          message: `${
-            field.charAt(0).toUpperCase() + field.slice(1)
-          } already exists.`,
-        });
+      const field = Object.keys(error.keyValue)[0];
+      res.status(400).json({
+        message: `${
+          field.charAt(0).toUpperCase() + field.slice(1)
+        } already exists.`,
+      });
     } else {
       // Handle other types of errors
       res.status(500).json({
